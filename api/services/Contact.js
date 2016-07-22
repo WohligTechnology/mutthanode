@@ -2,21 +2,22 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-  logo: {
-    type: String,
-    default: ""
-  },
-  order: {
-    type: String,
-    default: ""
-  },
   name: {
     type: String,
     default: ""
-  }
-
-
-});
+  },
+  email: {
+    type: String,
+    default: ""
+  },
+  subject: {
+    type: String,
+    default: ""
+  },
+  enquiry: {
+    type: String,
+    default: ""
+  }});
 
 module.exports = mongoose.model('Contact', schema);
 var models = {
@@ -96,7 +97,7 @@ var models = {
     async.parallel([
         function(callback) {
           Contact.count({
-            name: {
+            email: {
               '$regex': check
             }
           }).exec(function(err, number) {
@@ -114,7 +115,7 @@ var models = {
         },
         function(callback) {
           Contact.find({
-            name: {
+            email: {
               '$regex': check
             }
           }).populate("movie").skip(data.pagesize * (data.pagenumber - 1)).limit(data.pagesize).exec(function(err, data2) {

@@ -18,8 +18,6 @@ var schema = new Schema({
     type: String,
     default: ""
   }
-
-
 });
 
 module.exports = mongoose.model('Build', schema);

@@ -14,8 +14,6 @@ var schema = new Schema({
     type: String,
     default: ""
   }
-
-
 });
 
 module.exports = mongoose.model('Client', schema);
@@ -96,7 +94,7 @@ var models = {
     async.parallel([
         function(callback) {
           Client.count({
-            tag: {
+            name: {
               '$regex': check
             }
           }).exec(function(err, number) {
@@ -114,10 +112,10 @@ var models = {
         },
         function(callback) {
           Client.find({
-            tag: {
+            name: {
               '$regex': check
             }
-          }).populate("movie").skip(data.pagesize * (data.pagenumber - 1)).limit(data.pagesize).exec(function(err, data2) {
+          }).skip(data.pagesize * (data.pagenumber - 1)).limit(data.pagesize).exec(function(err, data2) {
             if (err) {
               console.log(err);
               callback(err, null);

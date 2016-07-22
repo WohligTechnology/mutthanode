@@ -1,5 +1,4 @@
 module.exports = {
-
   save: function(req, res) {
     if (req.body) {
       Client.saveData(req.body, res.callback);
@@ -12,7 +11,6 @@ module.exports = {
   },
 
   getOne: function(req, res) {
-
     if (req.body) {
       Client.getOne(req.body, res.callback);
     } else {

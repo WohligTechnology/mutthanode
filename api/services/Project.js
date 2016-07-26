@@ -47,6 +47,33 @@ var schema = new Schema({
 
 module.exports = mongoose.model('Project', schema);
 var models = {
+  sort: function(data, callback) {
+       function callSave(num) {
+           Project.saveData({
+               _id: data[num],
+               order: num + 1
+           }, function(err, respo) {
+               if (err) {
+                   console.log(err);
+                   callback(err, null);
+               } else {
+                   num++;
+                   if (num == data.length) {
+                       callback(null, {
+                           comment: "Data sorted"
+                       });
+                   } else {
+                       callSave(num);
+                   }
+               }
+           });
+       }
+       if (data && data.length > 0) {
+           callSave(0);
+       } else {
+           callback(null, {});
+       }
+   },
   saveData: function(data, callback) {
     var project = this(data);
     project.timestamp = new Date();

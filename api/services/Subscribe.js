@@ -46,6 +46,23 @@ var model = {
         }, null);
       }
     });
+  },
+
+  isUserSubscribed: function (data, callback) {
+    Subscribe.find({
+      email: data.email
+    }).exec(function (err, data) {
+      if (err)
+        callback(err, null);
+      else if (data && data.length > 0)
+        callback(null, "Subscriber found");
+      else
+        callback({
+          message: {
+            data: "Invalid credentials"
+          }
+        }, null);
+    });
   }
 };
 module.exports = _.assign(module.exports, exports, model);

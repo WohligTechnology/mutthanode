@@ -10,6 +10,22 @@ var controller = {
         }
       })
     }
+  },
+
+  getSubscribedUsers: function (req, res) {
+    Subscribe.getSubscribedUsers(res.callback);
+  },
+
+  isUserSubscribed: function (req, res) {
+    if (req.body) {
+      Subscribe.isUserSubscribed(req.body, res.callback);
+    } else {
+      res.json({
+        message: {
+          data: "Invalid request"
+        }
+      })
+    }
   }
 };
 module.exports = _.assign(module.exports, controller);

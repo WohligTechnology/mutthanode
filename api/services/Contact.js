@@ -2,11 +2,20 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
+  name: {
+    type: String,
+    default: ""
+  },
   email: {
     type: String,
-    required: true,
-    unique: true,
-    uniqueCaseInsensitive: true,
+    default: ""
+  },
+  subject: {
+    type: String,
+    default: ""
+  },
+  enquiry: {
+    type: String,
     default: ""
   }
 });

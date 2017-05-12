@@ -65,7 +65,18 @@ var models = {
         console.log(err);
         callback(err, null);
       } else if (found && found.length > 0) {
-        callback(null, found);
+        Project.find({}).select('thumbimage projectname').exec(function (err, proj) {
+          if (proj) {
+            var data = {
+              build: found,
+              project: proj
+            }
+
+            callback(null, data);
+          } else {
+            callback(err, null);
+          }
+        });
       } else {
         callback(null, []);
       }
@@ -79,7 +90,18 @@ var models = {
         console.log(err);
         callback(err, null);
       } else if (found && Object.keys(found).length > 0) {
-        callback(null, found);
+        Project.find({}).select('thumbimage projectname').exec(function (err, proj) {
+          if (proj) {
+            var data = {
+              build: found,
+              project: proj
+            }
+
+            callback(null, data);
+          } else {
+            callback(err, null);
+          }
+        });
       } else {
         callback(null, {});
       }

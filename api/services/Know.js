@@ -72,7 +72,18 @@ var model = {
         console.log(err);
         callback(err, null);
       } else if (found && found.length > 0) {
-        callback(null, found);
+        Management.find({}).exec(function (err, mgmt) {
+          if (mgmt) {
+            var data = {
+              know: found,
+              management: mgmt
+            }
+
+            callback(null, data);
+          } else {
+            callback(err, null);
+          }
+        });
       } else {
         callback(null, []);
       }
@@ -86,7 +97,18 @@ var model = {
         console.log(err);
         callback(err, null);
       } else if (found && Object.keys(found).length > 0) {
-        callback(null, found);
+        Management.find({}).exec(function (err, mgmt) {
+          if (mgmt) {
+            var data = {
+              know: found,
+              management: mgmt
+            }
+
+            callback(null, data);
+          } else {
+            callback(err, null);
+          }
+        });
       } else {
         callback(null, {});
       }

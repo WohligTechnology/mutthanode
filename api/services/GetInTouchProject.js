@@ -17,10 +17,10 @@ var schema = new Schema({
     type: String,
     required: true
   },
-  Project: {
+  project: {
     type: Schema.Types.ObjectId,
-    ref: 'Project'
-    // required: true
+    ref: 'Project',
+    required: true
   },
   status: {
     type: String,
@@ -36,7 +36,7 @@ module.exports = mongoose.model('GetInTouchProject', schema);
 // var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
   getProjects: function (callback) {
-    GetInTouchProject.find({}).exec(function (err, data) {
+    GetInTouchProject.find({}).populate('project').exec(function (err, data) {
       if (err) {
         callback(err, null);
       } else if (data) {
@@ -76,7 +76,7 @@ var model = {
     if (data._id) {
       this.findOneAndUpdate({
         _id: data._id
-      }, data).exec(function (err, updated) {
+      }, data).populate('project').exec(function (err, updated) {
         if (err) {
           console.log(err);
           callback(err, null);
@@ -112,7 +112,7 @@ var model = {
     });
   },
   getAll: function (data, callback) {
-    this.find({}).exec(function (err, found) {
+    this.find({}).populate('project').exec(function (err, found) {
       if (err) {
         console.log(err);
         callback(err, null);
@@ -126,7 +126,7 @@ var model = {
   getOne: function (data, callback) {
     this.findOne({
       "_id": data._id
-    }).exec(function (err, found) {
+    }).populate('project').exec(function (err, found) {
       if (err) {
         console.log(err);
         callback(err, null);

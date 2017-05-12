@@ -1,8 +1,9 @@
-module.exports = {
+// module.exports = _.cloneDeep(require("sails-wohlig-controller"));
+var controller = {
 
   save: function (req, res) {
     if (req.body) {
-      Build.saveData(req.body, res.callback);
+      Management.saveData(req.body, res.callback);
     } else {
       res.json({
         value: false,
@@ -14,7 +15,7 @@ module.exports = {
   getOne: function (req, res) {
 
     if (req.body) {
-      Build.getOne(req.body, res.callback);
+      Management.getOne(req.body, res.callback);
     } else {
       res.json({
         value: false,
@@ -25,7 +26,7 @@ module.exports = {
 
   delete: function (req, res) {
     if (req.body) {
-      Build.deleteData(req.body, res.callback);
+      Management.deleteData(req.body, res.callback);
     } else {
       res.json({
         value: false,
@@ -39,7 +40,7 @@ module.exports = {
       Global.response(err, data, res);
     }
     if (req.body) {
-      Build.getAll(req.body, res.callback);
+      Management.getAll(req.body, res.callback);
     } else {
       res.json({
         value: false,
@@ -51,7 +52,7 @@ module.exports = {
   findLimited: function (req, res) {
     if (req.body) {
       if (req.body.pagenumber && req.body.pagenumber !== "" && req.body.pagesize && req.body.pagesize !== "") {
-        Build.findLimited(req.body, res.callback);
+        Management.findLimited(req.body, res.callback);
       } else {
         res.json({
           value: false,
@@ -66,4 +67,5 @@ module.exports = {
     }
   }
 };
+module.exports = _.assign(module.exports, controller);
 

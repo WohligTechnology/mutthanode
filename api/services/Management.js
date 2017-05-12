@@ -4,75 +4,36 @@ var Schema = mongoose.Schema;
 var schema = new Schema({
   name: {
     type: String,
-    required: true,
-    excel: {
-      name: "Name"
-    }
-  },
-  email: {
-    type: String,
+    default: "",
     required: true
   },
-  enquiry: {
+  image: {
     type: String,
+    default: "",
     required: true
   },
-  Project: {
-    type: Schema.Types.ObjectId,
-    ref: 'Project'
-    // required: true
+  description: {
+    type: String,
+    default: ""
+  },
+  order: {
+    type: Number,
+    required: true
   },
   status: {
     type: String,
-    default: "Enabled"
+    default: "Enabled",
+    required: true
   }
 });
 
-// schema.plugin(deepPopulate, {});
-// schema.plugin(uniqueValidator);
-// schema.plugin(timestamps);
-module.exports = mongoose.model('GetInTouchProject', schema);
+module.exports = mongoose.model('Management', schema);
 
 // var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
-  getProjects: function (callback) {
-    GetInTouchProject.find({}).exec(function (err, data) {
-      if (err) {
-        callback(err, null);
-      } else if (data) {
-        callback(null, data);
-      } else {
-        callback({
-          message: {
-            data: "Invalid credentials!"
-          }
-        }, null);
-      }
-    });
-  },
-
-  setGetInTouchProjectEnquiry: function (data, callback) {
-    GetInTouchProject.saveData(data, function (err, data) {
-      if (err) {
-        callback(err, null);
-      } else if (data) {
-        callback(null, {
-          message: {
-            data: "Message entered successfully"
-          }
-        });
-      } else {
-        callback({
-          message: {
-            data: "Invalid credentials!"
-          }
-        }, null);
-      }
-    });
-  },
   saveData: function (data, callback) {
-    var GetInTouchProject = this(data);
-    GetInTouchProject.timestamp = new Date();
+    var Management = this(data);
+    Management.timestamp = new Date();
     if (data._id) {
       this.findOneAndUpdate({
         _id: data._id
@@ -87,7 +48,7 @@ var model = {
         }
       });
     } else {
-      GetInTouchProject.save(function (err, created) {
+      Management.save(function (err, created) {
         if (err) {
           callback(err, null);
         } else if (created) {
@@ -145,7 +106,7 @@ var model = {
     data.pagesize = parseInt(data.pagesize);
     async.parallel([
         function (callback) {
-          GetInTouchProject.count({
+          Management.count({
             name: {
               '$regex': check
             }
@@ -163,11 +124,11 @@ var model = {
           });
         },
         function (callback) {
-          GetInTouchProject.find({
+          Management.find({
             name: {
               '$regex': check
             }
-          }).skip(data.pagesize * (data.pagenumber - 1)).limit(data.pagesize).exec(function (err, data2) {
+          }).populate("movie").skip(data.pagesize * (data.pagenumber - 1)).limit(data.pagesize).exec(function (err, data2) {
             if (err) {
               console.log(err);
               callback(err, null);
@@ -190,7 +151,7 @@ var model = {
           callback(null, newreturns);
         }
       });
-  }
+  },
 };
 module.exports = _.assign(module.exports, exports, model);
 

@@ -7,7 +7,7 @@ var schema = new Schema({
     default: ""
   },
   order: {
-    type: String,
+    type: Number,
     default: ""
   },
   name: {

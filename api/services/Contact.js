@@ -17,6 +17,10 @@ var schema = new Schema({
   enquiry: {
     type: String,
     default: ""
+  },
+  status: {
+    type: String,
+    default: "Enabled"
   }
 });
 

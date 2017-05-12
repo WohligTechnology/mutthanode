@@ -10,6 +10,10 @@ var schema = new Schema({
     excel: {
       name: "Email"
     }
+  },
+  status: {
+    type: String,
+    status: "Enabled"
   }
 });
 
